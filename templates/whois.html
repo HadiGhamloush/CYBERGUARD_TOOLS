@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row">
+  <div class="col-xl-8 col-lg-9 col-12 mx-auto">
+    <h2 class="mb-1">WHOIS / IP Info Lookup</h2>
+    <p class="text-muted">Enter a domain (e.g., example.com) or an IP address to fetch public WHOIS and GeoIP info.</p>
+
+    <form method="post" class="card card-body mb-3">
+      <div class="row g-3 align-items-end">
+        <div class="col-md-8">
+          <label class="form-label">Domain or IP</label>
+          <input type="text" class="form-control" name="domain" placeholder="example.com" required>
+        </div>
+        <div class="col-md-4">
+          <button class="btn btn-primary w-100" type="submit">Lookup</button>
+        </div>
+      </div>
+    </form>
+
+    {% if error_message %}
+      <div class="alert alert-warning">{{ error_message }}</div>
+    {% endif %}
+
+    {% if results.whois or results.ipinfo %}
+      <div class="card mb-3">
+        <div class="card-header">WHOIS</div>
+        <div class="table-responsive">
+          <table class="table table-sm table-striped mb-0">
+            <tbody>
+              {% if results.whois %}
+                {% for k, v in results.whois.items() %}
+                <tr>
+                  <td class="text-nowrap">{{ k }}</td>
+                  <td class="text-break">{{ v }}</td>
+                </tr>
+                {% endfor %}
+              {% else %}
+                <tr><td colspan="2" class="text-muted">No WHOIS data available.</td></tr>
+              {% endif %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card" id="ipinfo-card">
+        <div class="card-header">IP Info (ip-api.com)</div>
+        <div class="table-responsive">
+          <table class="table table-sm table-striped mb-0">
+            <tbody>
+              {% if results.ipinfo %}
+                {% for k, v in results.ipinfo.items() %}
+                <tr>
+                  <td class="text-nowrap">{{ k }}</td>
+                  <td class="text-break">{{ v }}</td>
+                </tr>
+                {% endfor %}
+              {% else %}
+                <tr><td colspan="2" class="text-muted">No IP info available.</td></tr>
+              {% endif %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="mt-2">
+        <button class="btn btn-sm btn-outline-secondary" type="button" onclick="(function(){
+          const rows=[...document.querySelectorAll('#ipinfo-card tbody tr')].map(tr=>`${tr.children[0].textContent}: ${tr.children[1].textContent}`);
+          cgDownload('whois_ipinfo.txt', rows.join('\n'));
+        })()">Download</button>
+      </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}
+
+

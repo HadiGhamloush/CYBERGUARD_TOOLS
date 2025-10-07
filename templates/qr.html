@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row">
+  <div class="col-xl-8 col-lg-9 col-12 mx-auto">
+    <h2 class="mb-1">QR Code Link Scanner</h2>
+    <p class="text-muted">Upload an image that contains a QR code to reveal its contents safely.</p>
+    <form method="post" enctype="multipart/form-data" class="card card-body mb-3">
+      <div class="mb-2">
+        <label class="form-label">Upload image with QR code</label>
+        <input type="file" accept="image/*" name="qr_image" class="form-control">
+      </div>
+      <button class="btn btn-primary" type="submit">Scan</button>
+    </form>
+
+    {% if error_message %}
+      <div class="alert alert-warning">{{ error_message }}</div>
+    {% endif %}
+
+    {% if results %}
+      <div class="card mt-3" id="qr-results">
+        <div class="card-header">Decoded Results</div>
+        <ul class="list-group list-group-flush">
+          {% for r in results %}
+          <li class="list-group-item">
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="text-break">{{ r }}</div>
+              <div class="ms-2">
+                <a class="btn btn-sm btn-success" href="{{ r }}" target="_blank" rel="noreferrer noopener">Open</a>
+                <button class="btn btn-sm btn-outline-secondary" type="button" onclick="cgCopyText('{{ r }}')">Copy</button>
+              </div>
+            </div>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+      <div class="mt-2">
+        <button class="btn btn-sm btn-outline-secondary" type="button" onclick="cgDownload('qr-results.txt', Array.from(document.querySelectorAll('#qr-results .list-group-item .text-break')).map(e=>e.textContent).join('\n'))">Download All</button>
+      </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}
+
+

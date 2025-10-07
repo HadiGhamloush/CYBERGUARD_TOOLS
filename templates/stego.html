@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row">
+  <div class="col-xl-8 col-lg-9 col-12 mx-auto">
+    <h2 class="mb-1">Steganography (LSB) - Hide/Extract</h2>
+    <p class="text-muted">Educational tool: embed text into an image or extract hidden text. Output uses PNG.</p>
+
+    <div class="card mb-3">
+      <div class="card-header">Embed Text</div>
+      <form method="post" enctype="multipart/form-data" class="card-body">
+        <input type="hidden" name="mode" value="embed">
+        <div class="mb-3">
+          <label class="form-label">Cover image</label>
+          <input type="file" class="form-control" name="cover_image" accept="image/*" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Text to hide</label>
+          <textarea class="form-control" name="secret_text" rows="3" placeholder="Enter secret message" required></textarea>
+        </div>
+        <button class="btn btn-primary" type="submit">Embed</button>
+      </form>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-header">Extract Text</div>
+      <form method="post" enctype="multipart/form-data" class="card-body">
+        <input type="hidden" name="mode" value="extract">
+        <div class="mb-3">
+          <label class="form-label">Image with hidden text</label>
+          <input type="file" class="form-control" name="stego_image" accept="image/*" required>
+        </div>
+        <button class="btn btn-primary" type="submit">Extract</button>
+      </form>
+    </div>
+
+    {% if error_message %}
+      <div class="alert alert-warning">{{ error_message }}</div>
+    {% endif %}
+    {% if success_message %}
+      <div class="alert alert-info">{{ success_message }}</div>
+    {% endif %}
+
+    {% if output_image_b64 %}
+      <div class="card mb-3">
+        <div class="card-header">Embedded Image (PNG)</div>
+        <div class="card-body">
+          <img class="img-fluid rounded" src="data:image/png;base64,{{ output_image_b64 }}" alt="Stego Output">
+          <div class="mt-2">
+            <a class="btn btn-sm btn-outline-secondary" download="{{ downloaded_filename or 'stego_output.png' }}" href="data:image/png;base64,{{ output_image_b64 }}">Download</a>
+          </div>
+        </div>
+      </div>
+    {% endif %}
+
+    {% if extracted_text is not none %}
+      <div class="card">
+        <div class="card-header">Extracted Text</div>
+        <div class="card-body">
+          <pre class="mb-0">{{ extracted_text }}</pre>
+        </div>
+      </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}
+
+

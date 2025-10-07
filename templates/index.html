@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row mb-4">
+  <div class="col-xl-10 col-12 mx-auto">
+    <div class="p-4 p-md-5 hero text-center">
+      <h1 class="display-6 mb-2">CyberGuard Toolbox</h1>
+      <p class="mb-0">Learn and practice basic cybersecurity with simple, local tools.</p>
+    </div>
+
+    <div class="row g-3 mt-3">
+      <div class="col-md-6">
+        <div class="card h-100">
+          <div class="card-body">
+            <h5 class="card-title">Secure Password Generator</h5>
+            <p class="card-text">Generate strong, random passwords with customizable options.</p>
+            <a href="/password" class="btn btn-primary">Open</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card h-100">
+          <div class="card-body">
+            <h5 class="card-title">QR Code Link Scanner</h5>
+            <p class="card-text">Upload a photo of a QR code to reveal its link.</p>
+            <a href="/qr" class="btn btn-primary">Open</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card h-100">
+          <div class="card-body">
+            <h5 class="card-title">EXIF Metadata Viewer</h5>
+            <p class="card-text">Inspect photo metadata that may reveal camera and location info.</p>
+            <a href="/exif" class="btn btn-primary">Open</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card h-100">
+          <div class="card-body">
+            <h5 class="card-title">Simple Port Scanner</h5>
+            <p class="card-text">Check if common ports are open on a target safely.</p>
+            <a href="/port-scanner" class="btn btn-primary">Open</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card h-100">
+          <div class="card-body">
+            <h5 class="card-title">WHOIS / IP Info Lookup</h5>
+            <p class="card-text">Fetch WHOIS details and GeoIP info for a domain or IP.</p>
+            <a href="/whois" class="btn btn-primary">Open</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card h-100">
+          <div class="card-body">
+            <h5 class="card-title">Steganography</h5>
+            <p class="card-text">Hide text inside an image and extract it later.</p>
+            <a href="/stego" class="btn btn-primary">Open</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+
